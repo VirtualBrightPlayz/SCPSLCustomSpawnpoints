@@ -40,7 +40,10 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
             }
             else if (args.Length == 2)
             {
-                itemarr.Remove(args[0] + " " + args[1]);
+                if (itemarr.Contains(args[0] + " " + args[1]))
+                    itemarr.Remove(args[0] + " " + args[1]);
+                else
+                    itemarr.Add(args[0] + " " + args[1]);
             }
             else
                 return new string[] { "Error." };

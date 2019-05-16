@@ -18,6 +18,37 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
         SmodRevision = 0)]
     public class CustomSpawnPositions : Plugin
     {
+
+        public static Dictionary<string, string> roomNamesLCZ = new Dictionary<string, string>() {
+            //LCZ
+            { "173", "root_173" },
+            { "classdspawn", "root_classdspawn" },
+            { "cafe", "root_cafe" },
+            { "chkpa", "root_@chkpa" },
+            { "chkpb", "root_#chkpb" },
+            { "914", "root_914" },
+            { "012", "root_012" },
+            { "toilets", "root_toilets" },
+            { "372", "root_372" },
+            { "armory", "root_armory" },
+        };
+
+        public static Dictionary<string, string> roomNamesHCZ = new Dictionary<string, string>() {
+            //HCZ
+            { "lifta", "root_@chkpa" },
+            { "liftb", "root_#chkpb" },
+            { "457", "root_457" },
+            { "096", "root_457" },
+            { "nuke", "root_!nuke" },
+            { "microhid", "root_hid" },
+            { "079", "root_079" },
+            { "049", "root_$049" },
+            { "939", "root_testroom" },
+            { "106", "root_106" },
+            { "servers", "root_servers" },
+            { "ez", "root_checkpoint" },
+        };
+
         public override void OnDisable()
         {
         }

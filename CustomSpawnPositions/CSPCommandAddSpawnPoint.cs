@@ -39,6 +39,7 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
                     var hczrooms = GameObject.Find("HeavyRooms").transform;
                     var ezrooms = GameObject.Find("EntranceRooms").transform;
                     List<string> arr = new List<string>();
+                    customSpawnPositions.Info("LightRooms");
                     for (int i = 0; i < lczrooms.childCount; i++)
                     {
                         var room = lczrooms.GetChild(i);
@@ -52,11 +53,13 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
                         //arr.Add(room.name);
                         //room.name;
                     }
+                    customSpawnPositions.Info("HeavyRooms");
                     for (int i = 0; i < hczrooms.childCount; i++)
                     {
                         var room = hczrooms.GetChild(i);
                         customSpawnPositions.Info(room.name);
                     }
+                    customSpawnPositions.Info("EntranceRooms");
                     for (int i = 0; i < ezrooms.childCount; i++)
                     {
                         var room = ezrooms.GetChild(i);
@@ -66,18 +69,18 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
                 }
                 else if (args[0].Trim().ToLower().Equals("list"))
                 {
-                    return new string[] {
-                        "LCZ:",
-                        "173",
-                        "dspawn",
-                        "cafe",
-                        "chkpta",
-                        "chkptb",
-                        "914",
-                        "012",
-                        "wc",
-                        "372",
-                    };
+                    var str = new List<string>();
+                    str.Add("LCZ:");
+                    foreach (var item in CustomSpawnPositions.roomNamesLCZ)
+                    {
+                        str.Add(item.Key);
+                    }
+                    str.Add("HCZ:");
+                    foreach (var item in CustomSpawnPositions.roomNamesHCZ)
+                    {
+                        str.Add(item.Key);
+                    }
+                    return str.ToArray();
                 }
                 else if (args[0].Trim().ToLower().Equals("listsp"))
                 {
@@ -107,6 +110,12 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
                         Vector3 pos1 = room.position;
                         Vector3 pos2 = playerpos - pos1;
                         pos2 = room.InverseTransformPoint(playerpos);
+                        if (CustomSpawnPositions.roomNamesLCZ.ContainsKey(args[0].ToLower().Trim()) && room.name.ToLower().Contains(CustomSpawnPositions.roomNamesLCZ[args[0].ToLower().Trim()]))
+                        {
+                            arr.Add(args[0].ToLower().Trim() + " " + args[1] + " " + pos2.x + " " + pos2.y + " " + pos2.z);
+                        }
+                        //this is old, before the dict.
+                        /*
                         //173 spawn
                         if (room.name.ToLower().Contains("173") && args[0].ToLower().Trim().Contains("173"))
                         {
@@ -151,6 +160,17 @@ namespace VirtualBrightPlayz.SCPSL.CustomSpawnPositions
                         if (room.name.ToLower().Contains("372") && args[0].ToLower().Trim().Contains("372"))
                         {
                             arr.Add("372 " + args[1] + " " + pos2.x + " " + pos2.y + " " + pos2.z);
+                        }*/
+                    }
+                    for (int i = 0; i < hczrooms.childCount; i++)
+                    {
+                        var room = hczrooms.GetChild(i);
+                        Vector3 pos1 = room.position;
+                        Vector3 pos2 = playerpos - pos1;
+                        pos2 = room.InverseTransformPoint(playerpos);
+                        if (CustomSpawnPositions.roomNamesHCZ.ContainsKey(args[0].ToLower().Trim()) && room.name.ToLower().Contains(CustomSpawnPositions.roomNamesHCZ[args[0].ToLower().Trim()]))
+                        {
+                            arr.Add(args[0].ToLower().Trim() + " " + args[1] + " " + pos2.x + " " + pos2.y + " " + pos2.z);
                         }
                     }
                     File.WriteAllLines(FileManager.GetAppFolder() + "spawnpoint_db.txt", arr);
@@ -289,4 +309,170 @@ Root_Curve (6)
 Root_Curve (7)
 Root_Curve (8)
 Root_Curve (9)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] LightRooms
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] DoorsLight
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ClassDSpawn (1)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Vent
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Airlock
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_173
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Cafe (15)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_#ChkpB (22)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_@ChkpA (21)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Armory
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_372 (18)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Toilets
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_914 (14)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_012 (12)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Vent (1)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Vent (2)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Vent (3)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Vent (4)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (1)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (2)
+[22:24:39] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (8)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (9)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (10)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Troom (11)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Airlock (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (8)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (9)
+
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] HeavyRooms
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Map_PD_Main
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] DoorsHeavy
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_@ChkpA
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_#ChkpB
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_!Nuke
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_457
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Tesla
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Hid
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_079
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_$049
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Testroom
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3ar
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_106
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Servers
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Checkpoint
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Crossing (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Tesla (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Tesla (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Tesla (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Tesla (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (8)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (9)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (10)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (11)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (12)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Room3 (13)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (8)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (9)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (10)
+
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] EntranceRooms
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_CollapsedTunnel
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_*&*GateB
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_*&*GateA
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Endoof
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Shelter
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Smallrooms1
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Chef
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Cafeteria
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_PCs
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_upstairs
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Smallrooms2
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_PCs_small
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Intercom
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] EntranceDoors
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_CollapsedTunnel (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Endoof (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Straight (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (8)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (9)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (10)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (11)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (12)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (13)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_ Crossing (14)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (1)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (2)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (3)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (4)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (5)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (6)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (7)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (8)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (9)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (10)
+[22:24:40] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (11)
+[22:24:41] [INFO] [virtualbrightplayz.scpsl.customspawnpositions] Root_Curve (12)
 */
